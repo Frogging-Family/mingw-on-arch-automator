@@ -28,7 +28,6 @@ export BUILDDIR= # Override makepkg BUILDDIR path and use PKGBUILDs dirs instead
 
 _arg1="$1"
 _where=$PWD
-_dwarf2=true
 _fortran=false
 _win32threads=false
 _cloog_git=false
@@ -71,20 +70,6 @@ _mingwloop() {
   if [ "$_win32threads" == "true" ]; then
     sed -i "s/threads=posix/threads=win32/g" PKGBUILD
   fi
-  if [ "$_AURPKGNAME" == "mingw-w64-gcc-base" ] && [ $_dwarf2 == "true" ]; then
-    #dwarf2 exceptions
-    patch PKGBUILD << 'EOM'
-@@ -44,7 +44,7 @@
-         --enable-languages=c,lto \
-         --enable-static \
-         --with-system-zlib \
--        --enable-lto --disable-dw2-exceptions \
-+        --enable-lto --disable-sjlj-exceptions --with-dwarf2 \
-         --disable-nls --enable-version-specific-runtime-libs \
-         --disable-multilib --enable-checking=release
-     make all-gcc
-EOM
-  fi
   if [ "$_AURPKGNAME" == "mingw-w64-gcc" ] && [ $_fortran == "false" ]; then
     #no fortran
     patch PKGBUILD << 'EOM'
@@ -106,20 +91,6 @@ EOM
      ln -s ${_arch}-gcc "$pkgdir"/usr/bin/${_arch}-cc
      # mv dlls
      mkdir -p "$pkgdir"/usr/${_arch}/bin/
-EOM
-  fi
-  if [ "$_AURPKGNAME" == "mingw-w64-gcc" ] && [ $_dwarf2 == "true" ]; then
-    #dwarf2 exceptions
-    patch PKGBUILD << 'EOM'
-@@ -50,7 +50,7 @@
-         --enable-threads=posix --enable-fully-dynamic-string \
-         --enable-libstdcxx-time=yes --enable-libstdcxx-filesystem-ts=yes \
-         --with-system-zlib --enable-cloog-backend=isl \
--        --enable-lto --disable-dw2-exceptions --enable-libgomp \
-+        --enable-lto --disable-sjlj-exceptions --with-dwarf2 --enable-libgomp \
-         --disable-multilib --enable-checking=release
-     make
-   done
 EOM
   fi
   if [[ "$_arg1" == "-f" ]] || [[ "$_arg1" == "--force" ]]; then
