@@ -33,6 +33,10 @@ _win32threads=false
 _cloog_git=false
 _pgp_auto=true
 
+if [ "$1" = "nopgp" ]; then
+  _pgp_auto=false
+fi
+
 _sdlandco=false
 
 # Set to true to clean sources after building - If set to false, you'll be prompted about it
