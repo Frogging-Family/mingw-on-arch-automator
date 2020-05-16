@@ -67,6 +67,31 @@ _mingwloop() {
   git clone https://aur.archlinux.org/$_AURPKGNAME.git
   cd $_AURPKGNAME
   rm *.pkg.* # Delete package if exists
+  if [ "$_AURPKGNAME" == "mingw-w64-binutils" ]; then
+    wget -c -O binutils234.binutilspatch https://sourceware.org/bugzilla/attachment.cgi?id=12545
+    patch PKGBUILD << 'EOM'
+@@ -9,14 +9,17 @@ groups=('mingw-w64-toolchain' 'mingw-w64')
+ depends=('zlib')
+ options=('!libtool' '!emptydirs')
+ validpgpkeys=('3A24BC1E8FB409FA9F14371813FCEF89DD9E3C4F')  # Nick Clifton (Chief Binutils Maintainer) <nickc@redhat.com>
+-source=("https://ftp.gnu.org/gnu/binutils/binutils-${pkgver}.tar.gz"{,.sig})
++source=("https://ftp.gnu.org/gnu/binutils/binutils-${pkgver}.tar.gz"{,.sig}
++        "binutils234.binutilspatch")
+ sha256sums=('53537d334820be13eeb8acb326d01c7c81418772d626715c7ae927a7d401cab3'
+-            'SKIP')
++            'SKIP'
++            '870e0dfb3cea709dda32a864b6d082d38e8b7890b7e18206b8a826ad0d328eae')
+ 
+ _targets="i686-w64-mingw32 x86_64-w64-mingw32"
+ 
+ prepare() {
+   cd "$srcdir"/binutils-${pkgver}
++  patch -Np1 < "$srcdir/binutils234.binutilspatch"
+   #do not install libiberty
+   sed -i 's/install_to_$(INSTALL_DEST) //' libiberty/Makefile.in
+   # hack! - libiberty configure tests for header files using "$CPP $CPPFLAGS"
+EOM
+  fi
   if [ "$_win32threads" == "true" ]; then
     sed -i "s/threads=posix/threads=win32/g" PKGBUILD
   fi
