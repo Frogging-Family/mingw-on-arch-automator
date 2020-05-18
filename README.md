@@ -21,7 +21,7 @@ If you set _sdlandco to "true", you'll also get the following (disabled by defau
 - mingw-w64-configure
 - mingw-w64-sdl2
 
-**PGP keys importation might fail/timeout sometimes (dodgy servers, I assume), so if you don't see a successful key importation or if the compilation fails with a PGP key related error, you can try to import them manually:**
+**PGP keys importation might fail/timeout sometimes (dodgy servers, I assume), so if you don't see a successful key importation after ~10 seconds at worst or if the compilation fails with a PGP key related error, you can try to import them manually:**
 ```
 gpg --recv-keys 13FCEF89DD9E3C4F
 gpg --recv-keys 93BDB53CD4EBC740
@@ -33,4 +33,4 @@ Here's more detail about the keys:
 `33C235A34C46AA3FFB293709A328C3A2C3C45C06` # Jakub Jelinek <jakub@redhat.com>
 
 ## If you don't necessarily want pacman packages and would prefer a "portable" toolchain:
-A more powerful and configurable GCC/Mingw building tool (working cross-distro) is also available here https://github.com/Tk-Glitch/PKGBUILDS/tree/master/mostlyportable-gcc
+A more powerful and configurable GCC/Mingw building tool (working cross-distro) is also available here https://github.com/Frogging-Family/mostlyportable-gcc
