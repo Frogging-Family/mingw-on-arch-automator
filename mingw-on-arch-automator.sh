@@ -135,6 +135,7 @@ EOM
 
 # PGP keys
 if [ $_pgp_auto == "true" ]; then
+  echo -e "\nAttempting to add PGP keys... The keyserver can be unreliable. If it seems stuck, please try re-running the script a few times.\n"
   gpg --recv-keys 13FCEF89DD9E3C4F
   gpg --recv-keys 93BDB53CD4EBC740
   gpg --recv-keys A328C3A2C3C45C06
