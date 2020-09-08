@@ -1,3 +1,7 @@
+### This tool is deprecated now that Archlinux offers MinGW-w64 tools in the community repo.
+
+You can install the package set with `sudo pacman -S mingw-w64-gcc`
+
 # Mingw on Arch automator
 
 Automate the (annoying) installation of mingw on Arch and Arch-based distros.
